@@ -1,28 +1,51 @@
 # UseCase
 
-TODO: Write a gem description
+Provides a convention for writing use case interactor classes.
 
-## Installation
+## Example
 
-Add this line to your application's Gemfile:
+```ruby
+class SignUp
+  include UseCase
 
-    gem 'use_case'
+  # Whitelist attributes and specify a type
+  # The attribute will then be either the specified type or nil
+  attribute :username, String
+  attribute :password, String
 
-And then execute:
+  # UseCase includes ActiveModel::Validations
+  validates :username, :email, :password, presence: true
+  validate :username_is_unique
 
-    $ bundle
+  def perform
+    if valid?
+      @user = User.create!(attributes)
+      UserMailer.deliver_signup_confirmation(@user)
+    else
+      failure
+    end
+  end
 
-Or install it yourself as:
+  # Expose objects to the controller/other callers
+  attr_reader :user
 
-    $ gem install use_case
+  def error_message
+    errors.full_messages.to_sentence
+  end
+end
 
-## Usage
-
-TODO: Write usage instructions here
+# Usage
+use_case = SignUp.perform(username: 'test', password: 'test')
+if use_case.success?
+  redirect_to use_case.user
+else
+  render :new
+end
+```
 
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/use_case/fork )
+1. Fork it ( http://github.com/stevehodgkiss/use_case/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
