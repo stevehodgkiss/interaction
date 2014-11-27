@@ -2,10 +2,12 @@ require "active_support/all"
 require "active_model"
 require "use_case/version"
 require "use_case/succeedable"
+require "use_case/validations"
 
 module UseCase
   extend ActiveSupport::Concern
   include Succeedable
+  include Validations
 
   module ClassMethods
     # Executes the use case
