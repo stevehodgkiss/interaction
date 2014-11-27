@@ -1,12 +1,11 @@
 require "active_support/all"
 require "active_model"
 require "use_case/version"
-require "use_case/validations"
-require "use_case/form"
+require "use_case/succeedable"
 
 module UseCase
   extend ActiveSupport::Concern
-  include Validations
+  include Succeedable
 
   module ClassMethods
     # Executes the use case
@@ -33,43 +32,5 @@ module UseCase
   # @since 0.0.1
   def perform
     raise NotImplementedError
-  end
-
-  # Indicates if the use case was successful
-  #
-  # @return [TrueClass, FalseClass]
-  #
-  # @since 0.0.1
-  def success?
-    !failed?
-  end
-
-  # Indicates whether the use case failed
-  #
-  # @return [TrueClass, FalseClass]
-  #
-  # @since 0.0.1
-  def failed?
-    @failed
-  end
-
-  # Mark the use case as successful
-  #
-  # @return [TrueClass, FalseClass]
-  #
-  # @since 0.0.1
-  def success
-    @failed = false
-    true
-  end
-
-  # Mark the use case as failed
-  #
-  # @return [TrueClass, FalseClass]
-  #
-  # @since 0.0.1
-  def failure
-    @failed = true
-    false
   end
 end
