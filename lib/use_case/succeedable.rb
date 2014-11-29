@@ -15,7 +15,7 @@ module UseCase
     #
     # @since 0.0.1
     def failed?
-      @failed
+      !!@failed
     end
 
     private
