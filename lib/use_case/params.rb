@@ -1,4 +1,5 @@
 require 'virtus'
+require 'active_support/core_ext/hash/reverse_merge'
 
 module UseCase
   module Params

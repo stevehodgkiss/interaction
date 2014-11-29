@@ -1,4 +1,4 @@
-require "active_support/all"
+require "active_support/concern"
 require "active_model"
 require "use_case/version"
 require "use_case/succeedable"
