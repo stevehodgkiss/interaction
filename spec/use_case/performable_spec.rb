@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe UseCase do
+describe UseCase::Performable do
   let(:use_case_class) do
     Class.new do
-      include UseCase
+      include UseCase::Performable
 
       def initialize(*args)
         @args = args
