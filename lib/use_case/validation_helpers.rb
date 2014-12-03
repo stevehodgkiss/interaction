@@ -1,8 +1,5 @@
-require 'active_model/validations'
-
-module UseCase::Validations
+module UseCase::ValidationHelpers
   extend ActiveSupport::Concern
-  include ActiveModel::Validations
 
   private
 

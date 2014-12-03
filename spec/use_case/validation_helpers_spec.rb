@@ -1,9 +1,10 @@
 require 'spec_helper'
 
-describe UseCase::Validations do
+describe UseCase::ValidationHelpers do
   subject(:use_case) {
     Class.new {
-      include UseCase::Validations
+      include ActiveModel::Validations
+      include UseCase::ValidationHelpers
 
       public :merge_errors
     }.new
