@@ -9,9 +9,13 @@ require "use_case/form_object"
 
 module UseCase
   extend ActiveSupport::Concern
+
+  included do
+    include ActiveModel::Validations
+  end
+
   include Performable
   include Succeedable
-  include ActiveModel::Validations
-  include ValidationHelpers
   include Params
+  include ValidationHelpers
 end

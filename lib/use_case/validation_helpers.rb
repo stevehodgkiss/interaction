@@ -1,6 +1,4 @@
 module UseCase::ValidationHelpers
-  extend ActiveSupport::Concern
-
   private
 
   # Merges errors from another
