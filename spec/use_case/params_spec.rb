@@ -8,4 +8,12 @@ describe UseCase::Params do
     end.new
     expect(form.name).to be_nil
   end
+
+  it 'allows required to be set to true' do
+    form_class = Class.new do
+      include UseCase::Params
+      attribute :name, String, required: true
+    end
+    expect { form_class.new }.to raise_error(Virtus::CoercionError)
+  end
 end

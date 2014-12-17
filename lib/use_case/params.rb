@@ -11,8 +11,7 @@ module UseCase
     end
 
     module AttributeOverride
-      # Overrides Virtus attribute method to always set
-      # required to false if required isn't specified
+      # Overrides Virtus' attribute method to default required to false
       def attribute(name, type, options = {})
         super(name, type, options.reverse_merge(required: false))
       end
