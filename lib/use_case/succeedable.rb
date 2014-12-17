@@ -22,7 +22,7 @@ module UseCase
 
     # Mark the use case as successful
     #
-    # @return [TrueClass, FalseClass]
+    # @return [TrueClass]
     #
     # @since 0.0.1
     def success
@@ -32,7 +32,7 @@ module UseCase
 
     # Mark the use case as failed
     #
-    # @return [TrueClass, FalseClass]
+    # @return [FalseClass]
     #
     # @since 0.0.1
     def failure
