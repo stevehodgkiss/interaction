@@ -23,4 +23,9 @@ describe UseCase::FormObject do
       expect { form }.to raise_error(Virtus::CoercionError)
     end
   end
+
+  it 'ends up with the Virtus constructor, not the ActiveModel one' do
+    params_hash[:unknown_attribute] = 'blah'
+    expect { form }.to_not raise_error
+  end
 end

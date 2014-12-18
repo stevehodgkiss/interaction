@@ -4,8 +4,7 @@ module UseCase
 
     included do
       include ActiveModel::Model
+      include Params
     end
-
-    include Params
   end
 end
