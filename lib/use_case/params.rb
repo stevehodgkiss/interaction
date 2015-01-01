@@ -2,6 +2,8 @@ require 'virtus'
 require 'active_support/core_ext/hash/reverse_merge'
 
 module UseCase
+  # Provides attribute definition and strict type coersion with virtus and
+  # validations with Active Model
   module Params
     extend ActiveSupport::Concern
 
