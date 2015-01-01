@@ -4,10 +4,12 @@ Provides a convention for modelling user interactions as use case classes. A
 use case represents something a user does with your application, and is named
 as a verb. SignUp, RequestResetPasswordEmail etc.
 
-This library is mostly glue around Virtus, ActiveModel::Validations and Wisper
-to provide a convention for writing use cases.  Virtus is used for parameter
-declaration and strict type coersion.  ActiveModel::Validations is used for
-validations and Wisper for publish and subscribe events.
+This library is mostly glue around [Virtus](https://github.com/solnic/virtus),
+[ActiveModel::Validations](http://api.rubyonrails.org/classes/ActiveModel/Validations.html)
+and [Wisper](https://github.com/krisleech/wisper) to provide a convention for
+writing use cases.  Virtus is used for parameter declaration and strict type
+coersion.  ActiveModel::Validations is used for validations and Wisper for
+publish and subscribe events.
 
 ## Type coercion
 
