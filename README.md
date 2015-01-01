@@ -1,6 +1,6 @@
 # UseCase
 
-Provides a convention for modelling user interactions with use case classes. A
+Provides a convention for modelling user interactions as use case classes. A
 use case represents something a user does with your application, and is named
 as a verb. SignUp, RequestResetPasswordEmail etc.
 
