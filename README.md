@@ -9,6 +9,13 @@ to provide a convention for writing use cases.  Virtus is used for parameter
 declaration and strict type coersion.  ActiveModel::Validations is used for
 validations and Wisper for publish and subscribe events.
 
+## Type coercion
+
+Whitelisting and sanitizing untrusted input into an expected type before it
+enters your application is good practice. Input is coerced into the type
+specified using Virtus. You can expect an attribute to be either the defined
+type or nil.
+
 ## Sign up example
 
 Use Form objects when the input is complex or you want to bind it to a Rails
