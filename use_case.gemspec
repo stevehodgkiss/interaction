@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = UseCase::VERSION
   spec.authors       = ["Steve Hodgkiss"]
   spec.email         = ["steve@hodgkiss.me"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Glue around Virtus and ActiveModel Validations for writing use case interactor classes}
+  spec.description   = %q{}
   spec.homepage      = ""
   spec.license       = "MIT"
 
