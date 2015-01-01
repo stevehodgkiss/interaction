@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe UseCase::Succeedable do
-  subject(:test) {
+  let(:klass) {
     Class.new {
-      include UseCase::Succeedable
+      include UseCase
+      param_key 'sign_up'
 
       def mark_success
         success
@@ -12,8 +13,42 @@ describe UseCase::Succeedable do
       def mark_failure
         failure
       end
-    }.new
+    }
   }
+  subject(:test) { klass.new }
+
+  let(:subscriber) {
+    Class.new do
+      def sign_up_success(args = nil)
+        @called ||= 0
+        @called += 1
+      end
+
+      def called?
+        @called
+      end
+
+      def called_count
+        @called
+      end
+    end.new
+  }
+
+  context 'subscriptions' do
+    it 'allows global subscriptions' do
+      klass.subscribe(subscriber)
+      test.mark_success
+      expect(subscriber).to be_called
+    end
+
+    it 'allows block subscriptions' do
+      test.on_success do
+        @success_called = true
+      end
+      test.mark_success
+      expect(@success_called).to eq true
+    end
+  end
 
   context "when success or failure isn't indicated" do
     it { should be_success }

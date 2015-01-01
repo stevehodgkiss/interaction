@@ -1,5 +1,7 @@
 require "active_support/concern"
 require "active_model"
+require "wisper"
+
 require "use_case/version"
 require "use_case/performable"
 require "use_case/succeedable"
