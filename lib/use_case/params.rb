@@ -8,6 +8,9 @@ module UseCase
     included do
       include Virtus.model(strict: true)
       extend AttributeOverride
+
+      include ActiveModel::Conversion
+      include ActiveModel::Validations
     end
 
     module AttributeOverride
