@@ -16,5 +16,13 @@ describe UseCase::Params do
     end
     expect { params.new }.to raise_error(Virtus::CoercionError)
   end
+
+  it 'allows the active model name to be set' do
+    params = Class.new do
+      include UseCase::Params
+      attribute :name, String
+      param_key(:user)
+    end
+    expect(params.model_name).to eq 'user'
   end
 end

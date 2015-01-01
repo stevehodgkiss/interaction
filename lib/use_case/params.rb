@@ -18,6 +18,14 @@ module UseCase
       def attribute(name, type, options = {})
         super(name, type, options.reverse_merge(required: false))
       end
+
+      def param_key(name)
+        class_eval <<-RUBY
+          def self.model_name
+            @model_name ||= ActiveModel::Name.new(self, nil, "#{name}")
+          end
+        RUBY
+      end
     end
   end
 end
