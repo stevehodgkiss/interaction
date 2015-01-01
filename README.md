@@ -13,6 +13,7 @@ Conventions to follow:
 ```ruby
 class SignUpForm
   include UseCase::Params
+  param_key 'sign_up'
 
   # Virtus is included with strict mode enabled, although `attribute` is
 overridden to default to `required: false` in order to allow nil values without
@@ -53,6 +54,7 @@ class SignUp
     if valid? # It's the use cases responsibility to validate data and handle the invalid scenario
       @user = User.create!(form.attributes)
       UserMailer.deliver_signup_confirmation(@user)
+      success(@user)
     else
       failure
     end
@@ -98,6 +100,23 @@ private
 def load_form
   @form = SignUpForm.new(params)
 end
+
+# Global subscribers
+class LogSubscriber
+  def sign_up_success(user)
+    Rails.logger.info("Signed up user")
+  end
+end
+SignUp.subscribe(LogSubscriber.new)
+
+# Local subscribers
+use_case = SignUp.new(form)
+use_case.on_success do |user|
+  # ...
+end
+use_case.on_failure do
+end
+use_case.perform
 ```
 
 ## Contributing
