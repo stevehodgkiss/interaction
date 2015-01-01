@@ -1,31 +1,29 @@
 # UseCase
 
-Provides a convention for writing use case interactor classes. Uses Virtus for parameter declaration and type coersion. Uses ActiveModel::Validations for validations.
+Provides a convention for modelling user interactions with use case classes. A
+use case represents something a user does with your application, and is named
+as a verb. SignUp, RequestResetPasswordEmail etc.
 
-Conventions to follow:
+This library is mostly glue around Virtus, ActiveModel::Validations and Wisper
+to provide a convention for writing use cases.  Virtus is used for parameter
+declaration and strict type coersion.  ActiveModel::Validations is used for
+validations and Wisper for publish and subscribe events.
 
-- Use cases live in app/use_cases
-- Name use cases classes as verbs, i.e. SignUp or RequestPasswordResetEmail
-- Use a Form Object as input to use cases when a rails form is involved or the input is complex enough to warrant a separate object.
+## Sign up example
 
-## Example
+Use Form objects when the input is complex or you want to bind it to a Rails
+form. Attributes can also be defined on use case classes.
 
 ```ruby
 class SignUpForm
   include UseCase::Params
   param_key 'sign_up'
 
-  # Virtus is included with strict mode enabled, although `attribute` is
-overridden to default to `required: false` in order to allow nil values without
-a Virtus exception.
-  # Therefore attribute values will be either the specified type or nil
-
   attribute :username, String
   attribute :password, String
   attribute :password_confirmation, String
 
-  # UseCase includes ActiveModel::Validations
-  # Context free validations live inside the form object
+  # Context free validations
   validates :username, :email, :password, presence: true
   validates :password, confirmation: true
 
@@ -37,7 +35,11 @@ a Virtus exception.
     # ...
   end
 end
+```
 
+The use case interacts with the rest of your application to complete the use case. Implement #perform and call `success` or `failure` with any arguments. Those arguments are sent to subscribers of the events.
+
+```ruby
 class SignUp
   include UseCase
 
@@ -47,11 +49,11 @@ class SignUp
 
   validate :form_is_valid
 
-  # Contextual validations live inside the use case
-  validate :username_is_unique, :password_hasnt_been_used_before_for_this_user
+  # Contextual validations
+  validate :username_is_unique
 
   def perform
-    if valid? # It's the use cases responsibility to validate data and handle the invalid scenario
+    if valid?
       @user = User.create!(form.attributes)
       UserMailer.deliver_signup_confirmation(@user)
       success(@user)
@@ -73,43 +75,50 @@ class SignUp
     errors.add(:username, 'is taken') if User.username_taken?(username)
   end
 
-  def password_hasnt_been_used_before_for_this_user
-    # ...
-  end
-
   def form_is_valid
     merge_errors(@form) unless @form.valid?
   end
 end
+```
 
-# Usage inside a Rails controller
-before_filter :load_form, only: [:new, :create]
+## Usage inside a Rails controller
 
-def create
-  use_case = SignUp.perform(@form)
-  if use_case.success?
-    redirect_to use_case.user
-  else
-    flash.now[:error] = use_case.error_message
-    render :new
+```ruby
+class UsersController < ApplicationController
+  before_filter :load_form, only: [:new, :create]
+
+  def create
+    use_case = SignUp.perform(@form)
+    if use_case.success?
+      redirect_to use_case.user
+    else
+      flash.now[:error] = use_case.error_message
+      render :new
+    end
+  end
+
+  private
+
+  def load_form
+    @form = SignUpForm.new(params)
   end
 end
+```
 
-private
+## Global subscribers
 
-def load_form
-  @form = SignUpForm.new(params)
-end
-
-# Global subscribers
+```ruby
 class LogSubscriber
   def sign_up_success(user)
     Rails.logger.info("Signed up user")
   end
 end
 SignUp.subscribe(LogSubscriber.new)
+```
 
-# Local subscribers
+## Block subscribers
+
+```ruby
 use_case = SignUp.new(form)
 use_case.on_success do |user|
   # ...
