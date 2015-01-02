@@ -1,7 +1,5 @@
 module UseCase
   module Performable
-    extend ActiveSupport::Concern
-
     module ClassMethods
       # Executes the use case
       #
@@ -13,6 +11,7 @@ module UseCase
       # @return [Object] returns the use case object
       #
       # @since 0.0.1
+    # @api public
       def perform(*args)
         use_case = new(*args)
         use_case.perform
@@ -25,8 +24,11 @@ module UseCase
     # Use cases must implement this method
     #
     # @since 0.0.1
+    # @api public
     def perform
-      raise NotImplementedError
+      catch :halt do
+        super
+      end
     end
   end
 end

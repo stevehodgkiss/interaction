@@ -109,7 +109,7 @@ module UseCase
     def failure(args = nil)
       @failed = true
       publish(namespaced_name(:failure), args)
-      false
+      throw :halt
     end
 
     # Return an event name namespaced by the underscored class name

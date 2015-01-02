@@ -62,13 +62,10 @@ class SignUp
   validate :username_is_unique
 
   def perform
-    if valid?
-      @user = User.create!(form.attributes)
-      UserMailer.deliver_signup_confirmation(@user)
-      success(@user)
-    else
-      failure
-    end
+    halt unless valid?
+    @user = User.create!(form.attributes)
+    UserMailer.deliver_signup_confirmation(@user)
+    success(@user)
   end
 
   # Expose objects to the controller/other callers
