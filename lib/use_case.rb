@@ -11,7 +11,11 @@ require "use_case/params"
 module UseCase
   extend ActiveSupport::Concern
 
-  include Performable
+  included do
+    prepend Performable
+    extend Performable::ClassMethods
+  end
+
   include Succeedable
   include Params
   include ValidationHelpers

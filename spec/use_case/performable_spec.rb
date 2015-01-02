@@ -3,7 +3,7 @@ require 'spec_helper'
 describe UseCase::Performable do
   let(:use_case_class) do
     Class.new do
-      include UseCase::Performable
+      include UseCase
 
       def initialize(*args)
         @args = args
@@ -34,5 +34,37 @@ describe UseCase::Performable do
   it 'passes on args to initialize' do
     use_case = use_case_class.perform(1, 2)
     expect(use_case.args).to eq [1, 2]
+  end
+
+  describe '#halt' do
+    let(:use_case_class) {
+      Class.new do
+        include UseCase
+        param_key 'sign_up'
+
+        def initialize(*args)
+          @args = args
+        end
+
+        def perform
+          halt
+          @performed = true
+        end
+
+        def performed?
+          @performed
+        end
+      end
+    }
+
+    it 'halts execution of the use case' do
+      use_case = use_case_class.perform
+      expect(use_case).to_not be_performed
+    end
+
+    it 'marks the use case as failed' do
+      use_case = use_case_class.perform
+      expect(use_case).to_not be_success
+    end
   end
 end
