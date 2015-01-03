@@ -9,7 +9,7 @@ module UseCase
   def self.included(base)
     base.class_eval do
       prepend Perform
-      extend UseCaseClassMethods
+      extend ClassMethods
       include Params
       include Wisper::Publisher
     end
@@ -31,7 +31,7 @@ module UseCase
     end
   end
 
-  module UseCaseClassMethods
+  module ClassMethods
     # Executes the use case
     #
     # A use case object is instantiated with the supplied
