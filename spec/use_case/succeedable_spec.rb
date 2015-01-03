@@ -6,16 +6,20 @@ describe UseCase::Succeedable do
       include UseCase
       param_key 'sign_up'
 
-      def mark_success
-        success
+      def initialize(options)
+        @success = options.fetch(:success, true)
       end
 
-      def mark_failure
-        failure
+      def perform
+        if @success
+          success
+        else
+          failure
+        end
       end
     }
   }
-  subject(:test) { klass.new }
+  subject(:test) { klass.new(params) }
 
   let(:subscriber) {
     Class.new do
@@ -33,11 +37,12 @@ describe UseCase::Succeedable do
       end
     end.new
   }
+  let(:params) { {} }
 
   context 'subscriptions' do
     it 'allows global subscriptions' do
       klass.subscribe(subscriber)
-      test.mark_success
+      test.perform
       expect(subscriber).to be_called
     end
 
@@ -45,7 +50,7 @@ describe UseCase::Succeedable do
       test.on_success do
         @success_called = true
       end
-      test.mark_success
+      test.perform
       expect(@success_called).to eq true
     end
   end
@@ -56,14 +61,16 @@ describe UseCase::Succeedable do
   end
 
   context "when marked as successful" do
-    before { test.mark_success }
+    let(:params) { { success: true } }
+    before { test.perform }
 
     it { should be_success }
     it { should_not be_failed }
   end
 
   context "when marked as failed" do
-    before { test.mark_failure }
+    let(:params) { { success: false } }
+    before { test.perform }
 
     it { should_not be_success }
     it { should be_failed }

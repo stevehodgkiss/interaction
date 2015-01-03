@@ -30,16 +30,5 @@ module UseCase
         super
       end
     end
-
-    private
-
-    # Halts execution of the use case and marks it as failed
-    #
-    # @since 0.0.1
-    # @api public
-    def halt
-      failure
-      throw :halt
-    end
   end
 end

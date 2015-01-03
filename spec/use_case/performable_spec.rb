@@ -47,7 +47,7 @@ describe UseCase::Performable do
         end
 
         def perform
-          halt
+          failure
           @performed = true
         end
 
