@@ -1,5 +1,4 @@
 require 'virtus'
-require 'active_support/core_ext/hash/reverse_merge'
 
 module UseCase
   # Whitelisting, coerce and validate user input.
@@ -46,7 +45,7 @@ module UseCase
       # @since 0.0.1
       # @api public
       def attribute(name, type, options = {})
-        super(name, type, options.reverse_merge(required: false))
+        super(name, type, { required: false }.merge(options))
       end
 
       # Set the active model name to be used for partial paths
