@@ -25,4 +25,26 @@ describe UseCase::Params do
     end
     expect(params.model_name).to eq 'user'
   end
+
+  context 'type coercion' do
+    let(:klass) {
+      Class.new do
+        include UseCase::Params
+
+        attribute :name, String
+      end
+    }
+
+    it 'fails loudly when given an incorrect type' do
+      expect {
+        klass.new(name: [])
+      }.to raise_error(Virtus::CoercionError)
+    end
+
+    it 'does not fail on nil or missing attributes' do
+      expect {
+        klass.new
+      }.not_to raise_error
+    end
+  end
 end
