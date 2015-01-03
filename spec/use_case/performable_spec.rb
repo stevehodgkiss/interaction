@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UseCase::Performable do
+describe UseCase do
   let(:use_case_class) do
     Class.new do
       include UseCase

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UseCase::Succeedable do
+describe UseCase do
   let(:klass) {
     Class.new {
       include UseCase
