@@ -62,9 +62,9 @@ class SignUp
   validate :username_is_unique
 
   def perform
-    failure unless valid?
-    @user = User.create!(form.attributes)
-    UserMailer.deliver_signup_confirmation(@user)
+    validate!
+    create_user
+    deliver_welcome_email
     success(@user)
   end
 
@@ -83,6 +83,15 @@ class SignUp
 
   def form_is_valid
     merge_errors(@form) unless @form.valid?
+  end
+
+  def create_user
+    @user = User.create(form.attributes)
+    failure unless @user.persisted?
+  end
+
+  def deliver_welcome_email
+    UserMailer.deliver_signup_confirmation(@user)
   end
 end
 ```

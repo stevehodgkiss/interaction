@@ -1,6 +1,14 @@
 module UseCase::ValidationHelpers
   private
 
+  # Halts execution of the use case if validation fails
+  #
+  # @since 0.0.1
+  # @api public
+  def validate!
+    failure unless valid?
+  end
+
   # Merges errors from another
   # ActiveModel::Validations object with itself
   #
