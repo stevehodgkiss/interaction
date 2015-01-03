@@ -6,6 +6,11 @@ require "use_case/validation_helpers"
 require "use_case/params"
 
 module UseCase
+  # Override Ruby's module inclusion hook to prepend base with our #perform
+  # method, extend base with a .perform method, include Params for Virtus and
+  # ActiveSupport::Validation, and include Wisper for pub/sub.
+  #
+  # @api private
   def self.included(base)
     base.class_eval do
       prepend Perform
