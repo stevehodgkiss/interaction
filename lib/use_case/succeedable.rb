@@ -103,7 +103,8 @@ module UseCase
 
     private
 
-    # Mark the use case as successful
+    # Mark the use case as successful and publish the event with
+    # Wisper.
     #
     # @return [TrueClass]
     #
@@ -115,7 +116,8 @@ module UseCase
       true
     end
 
-    # Mark the use case as failed
+    # Mark the use case as failed and publish the event with
+    # Wisper.
     #
     # @return [FalseClass]
     #
@@ -130,6 +132,12 @@ module UseCase
     # Return an event name namespaced by the underscored class name
     #
     # @return [String]
+    #
+    # @example
+    #   namespaced_event(:success)
+    #   # => "sign_up_success"
+    #   namespaced_event(:failure)
+    #   # => "sign_up_failure"
     #
     # @since 0.0.1
     # @api private

@@ -1,7 +1,8 @@
 module UseCase::ValidationHelpers
   private
 
-  # Halts execution of the use case if validation fails
+  # Halts execution of the use case if validation fails and
+  # published errors with Wisper.
   #
   # @since 0.0.1
   # @api public
