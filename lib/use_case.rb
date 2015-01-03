@@ -25,7 +25,8 @@ module UseCase
   module Perform
     # Executes use case logic
     #
-    # Use cases must implement this method
+    # Use cases must implement this method. Assumes success if failure is not
+    # called.
     #
     # @since 0.0.1
     # @api public
@@ -65,13 +66,6 @@ module UseCase
   # @api public
   def success?
     !failed?
-  end
-
-  # Indicates whether the use case called success or failure
-  #
-  # @api private
-  def result_specified?
-    defined?(@failed)
   end
 
   # Indicates whether the use case failed
@@ -118,7 +112,7 @@ module UseCase
     on(namespaced_name(:failure), &block)
   end
 
-  protected
+  private
 
   # Mark the use case as successful and publish the event with
   # Wisper.
@@ -169,5 +163,15 @@ module UseCase
   # @api public
   def validate!
     failure(errors) unless valid?
+  end
+
+  # Indicates whether the use case called success or failure
+  #
+  # @return [TrueClass, FalseClass]
+  #
+  # @api private
+  # @since 0.0.1
+  def result_specified?
+    defined?(@failed)
   end
 end
