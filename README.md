@@ -62,7 +62,7 @@ class SignUp
   validate :username_is_unique
 
   def perform
-    halt unless valid?
+    failure unless valid?
     @user = User.create!(form.attributes)
     UserMailer.deliver_signup_confirmation(@user)
     success(@user)
