@@ -5,6 +5,8 @@ module UseCase::ValidationHelpers
   # ActiveModel::Validations object with itself
   #
   # @param object [ActiveModel::Validations]
+  #
+  # @api public
   def merge_errors(object)
     object.errors.each do |attribute, value|
       errors.add(attribute, value)

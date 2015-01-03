@@ -55,6 +55,7 @@ module UseCase
     # @return [TrueClass, FalseClass]
     #
     # @since 0.0.1
+    # @api public
     def success?
       !failed?
     end
@@ -64,6 +65,7 @@ module UseCase
     # @return [TrueClass, FalseClass]
     #
     # @since 0.0.1
+    # @api public
     def failed?
       !!@failed
     end
@@ -95,6 +97,7 @@ module UseCase
     # @return [TrueClass]
     #
     # @since 0.0.1
+    # @api public
     def success(args = nil)
       @failed = false
       publish(namespaced_name(:success), args)
@@ -106,6 +109,7 @@ module UseCase
     # @return [FalseClass]
     #
     # @since 0.0.1
+    # @api public
     def failure(args = nil)
       @failed = true
       publish(namespaced_name(:failure), args)
@@ -117,6 +121,7 @@ module UseCase
     # @return [String]
     #
     # @since 0.0.1
+    # @api private
     def namespaced_name(event)
       [model_name.param_key, event].join('_')
     end
