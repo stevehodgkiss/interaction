@@ -30,13 +30,11 @@ module UseCase
     # @since 0.0.1
     # @api public
     def perform
-      return_value = catch :halt do
-        super
+      catch :halt do
+        super.tap do
+          success unless result_specified?
+        end
       end
-      unless result_specified?
-        success
-      end
-      return_value
     end
   end
 
