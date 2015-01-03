@@ -24,14 +24,14 @@ module UseCase
   #
   #   form = SignUpForm.new(name: ['a']) # => Virtus::CoercionError
   module Params
-    extend ActiveSupport::Concern
+    def self.included(base)
+      base.class_eval do
+        include Virtus.model(strict: true)
+        extend AttributeOverride
 
-    included do
-      include Virtus.model(strict: true)
-      extend AttributeOverride
-
-      include ActiveModel::Conversion
-      include ActiveModel::Validations
+        include ActiveModel::Conversion
+        include ActiveModel::Validations
+      end
     end
 
     module AttributeOverride

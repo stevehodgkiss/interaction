@@ -1,4 +1,3 @@
-require "active_support/concern"
 require "active_model"
 require "wisper"
 
@@ -7,16 +6,16 @@ require "use_case/validation_helpers"
 require "use_case/params"
 
 module UseCase
-  extend ActiveSupport::Concern
-
-  included do
-    prepend Perform
-    extend UseCaseClassMethods
+  def self.included(base)
+    base.class_eval do
+      prepend Perform
+      extend UseCaseClassMethods
+      include Params
+      include Wisper::Publisher
+    end
   end
 
-  include Params
   include ValidationHelpers
-  include Wisper::Publisher
 
   module Perform
     # Executes use case logic
@@ -105,7 +104,7 @@ module UseCase
     on(namespaced_name(:failure), &block)
   end
 
-  private
+  protected
 
   # Mark the use case as successful and publish the event with
   # Wisper.
