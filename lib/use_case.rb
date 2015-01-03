@@ -30,9 +30,13 @@ module UseCase
     # @since 0.0.1
     # @api public
     def perform
-      catch :halt do
+      return_value = catch :halt do
         super
       end
+      unless result_specified?
+        success
+      end
+      return_value
     end
   end
 
@@ -63,6 +67,13 @@ module UseCase
   # @api public
   def success?
     !failed?
+  end
+
+  # Indicates whether the use case called success or failure
+  #
+  # @api private
+  def result_specified?
+    defined?(@failed)
   end
 
   # Indicates whether the use case failed
