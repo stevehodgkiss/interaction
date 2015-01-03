@@ -36,7 +36,7 @@ describe UseCase::Performable do
     expect(use_case.args).to eq [1, 2]
   end
 
-  describe '#halt' do
+  describe '#failure' do
     let(:use_case_class) {
       Class.new do
         include UseCase

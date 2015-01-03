@@ -15,12 +15,9 @@ module UseCase
   #     attr_reader :user
   #
   #     def perform
-  #       if valid?
-  #         @user = User.create(name: name)
-  #         success(@user)
-  #       else
-  #         failure
-  #       end
+  #       validate!
+  #       @user = User.create(name: name)
+  #       success(@user)
   #     end
   #   end
   #
@@ -74,6 +71,13 @@ module UseCase
     #
     # @see Wisper
     #
+    # @example
+    #   use_case = SignUp.new(params)
+    #   use_case.on_success do
+    #     # handle success
+    #   end
+    #   use_case.perform
+    #
     # @since 0.0.1
     # @api public
     def on_success(&block)
@@ -83,6 +87,13 @@ module UseCase
     # Attach a failure callback
     #
     # @see Wisper
+    #
+    # @example
+    #   use_case = SignUp.new(params)
+    #   use_case.on_failure do
+    #     # handle failure
+    #   end
+    #   use_case.perform
     #
     # @since 0.0.1
     # @api public
