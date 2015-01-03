@@ -13,9 +13,9 @@ module UseCase
       # @since 0.0.1
       # @api public
       def perform(*args)
-        use_case = new(*args)
-        use_case.perform
-        use_case
+        new(*args).tap do |use_case|
+          use_case.perform
+        end
       end
     end
 
