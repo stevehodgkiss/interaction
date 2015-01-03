@@ -37,7 +37,7 @@ module UseCase
   end
 
   module ClassMethods
-    # Executes the use case
+    # Executes and returns the use case
     #
     # A use case object is instantiated with the supplied
     # arguments, perform is called and the object is returned.

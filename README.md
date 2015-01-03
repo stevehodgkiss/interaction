@@ -86,8 +86,7 @@ class SignUp
   end
 
   def create_user
-    @user = User.create(form.attributes)
-    failure unless @user.persisted?
+    @user = User.create!(form.attributes)
   end
 
   def deliver_welcome_email
