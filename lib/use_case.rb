@@ -35,7 +35,7 @@ module UseCase
   # @since 0.0.1
   def self.use_case(options = {})
     validations = options.fetch(:validations, true)
-    ModuleCustomiser.new do
+    ModuleCustomiser.build do
       prepend Perform
       extend ClassMethods
       include InstanceMethods
@@ -59,7 +59,7 @@ module UseCase
   # @since 0.0.1
   def self.params(options = {})
     validations = options.fetch(:validations, true)
-    ModuleCustomiser.new do
+    ModuleCustomiser.build do
       include Params
       if validations
         include ActiveModel::Validations
