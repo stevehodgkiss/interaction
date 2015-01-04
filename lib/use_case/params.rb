@@ -26,13 +26,13 @@ module UseCase
     def self.included(base)
       base.class_eval do
         include Virtus.model(strict: true)
-        extend AttributeOverride
+        extend ClassMethods
 
         include ActiveModel::Conversion
       end
     end
 
-    module AttributeOverride
+    module ClassMethods
       # Specify an attribute and it's type
       #
       # @param name [String] the name of the attribute
