@@ -3,12 +3,12 @@ module UseCase
   #
   # @example
   #   options = {}
-  #   ModuleCustomiser.build do
+  #   ModuleBuilder.build do
   #     if options.fetch(:validations, true)
   #       include ActiveSupport::Validations
   #     end
   #   end
-  class ModuleCustomiser
+  class ModuleBuilder
     def self.build(&block)
       Module.new.tap do |mod|
         mod.define_singleton_method(:included) do |base|
