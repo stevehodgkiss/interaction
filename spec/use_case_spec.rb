@@ -6,7 +6,7 @@ describe UseCase do
   describe '.perform' do
     let(:use_case_class) do
       Class.new do
-        include UseCase
+        include UseCase.use_case
         param_key 'sign_up'
 
         def initialize(*args)
@@ -60,7 +60,7 @@ describe UseCase do
   describe '#failure' do
     let(:use_case_class) {
       Class.new do
-        include UseCase
+        include UseCase.use_case
         param_key 'sign_up'
 
         def initialize(*args)
@@ -115,7 +115,7 @@ describe UseCase do
   describe '#success' do
     let(:use_case_class) {
       Class.new do
-        include UseCase
+        include UseCase.use_case
         param_key 'sign_up'
 
         def initialize(*args)
@@ -162,6 +162,31 @@ describe UseCase do
         expect(@args).to eq :my_arg
       end
     end
+  end
 
+  describe 'configuration options' do
+    context 'without validations' do
+      let(:use_case_class) {
+        Class.new do
+          include UseCase.use_case(validations: false)
+        end
+      }
+
+      it "doesn't include ActiveModel::Validations" do
+        expect(use_case_class.ancestors).to_not include(ActiveModel::Validations)
+      end
+    end
+
+    context 'with validations' do
+      let(:use_case_class) {
+        Class.new do
+          include UseCase.use_case(validations: true)
+        end
+      }
+
+      it 'includes ActiveModel::Validations' do
+        expect(use_case_class.ancestors).to include(ActiveModel::Validations)
+      end
+    end
   end
 end

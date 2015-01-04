@@ -25,7 +25,7 @@ form. Attributes can also be defined on use case classes.
 
 ```ruby
 class SignUpForm
-  include UseCase::Params
+  include UseCase.params
   param_key 'sign_up'
 
   attribute :username, String
@@ -50,7 +50,7 @@ The use case interacts with the rest of your application to complete the use cas
 
 ```ruby
 class SignUp
-  include UseCase
+  include UseCase.use_case
 
   def initialize(form)
     @form = form
