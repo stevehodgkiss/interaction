@@ -29,7 +29,6 @@ module UseCase
         extend AttributeOverride
 
         include ActiveModel::Conversion
-        include ActiveModel::Validations
       end
     end
 
