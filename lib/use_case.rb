@@ -175,8 +175,8 @@ module UseCase
       true
     end
 
-    # Mark the use case as failed and publish the event with
-    # Wisper.
+    # Mark the use case as failed, publishes the event with
+    # Wisper and exits the use case.
     #
     # @return [FalseClass]
     #
