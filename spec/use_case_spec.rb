@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe UseCase do
-  before { Wisper::GlobalListeners.clear }
-
   describe '.perform' do
     let(:use_case_class) do
       Class.new do
@@ -47,13 +45,6 @@ describe UseCase do
         expect(use_case).to be_success
         expect(use_case).to_not be_failed
       end
-
-      it 'publishes a global success event' do
-        subscriber = double(sign_up_success: true)
-        use_case_class.subscribe(subscriber)
-        use_case_class.perform
-        expect(subscriber).to have_received(:sign_up_success)
-      end
     end
   end
 
@@ -87,29 +78,6 @@ describe UseCase do
       use_case = use_case_class.perform
       expect(use_case).to_not be_success
     end
-
-    context 'events' do
-      before { Wisper::GlobalListeners.clear }
-
-      it 'published a global failed event with given args' do
-        subscriber = double(sign_up_failure: false)
-        use_case_class.subscribe(subscriber)
-        use_case = use_case_class.perform(:my_arg)
-        expect(subscriber).to have_received(:sign_up_failure).with(:my_arg)
-      end
-
-      it 'publishes a local failed event with given args' do
-        use_case = use_case_class.new(:my_arg)
-        @called = false
-        use_case.on_failure do |args|
-          @called = true
-          @args = args
-        end
-        use_case.perform
-        expect(@called).to eq true
-        expect(@args).to eq :my_arg
-      end
-    end
   end
 
   describe '#success' do
@@ -138,29 +106,6 @@ describe UseCase do
     it 'marks the use case as success' do
       use_case = use_case_class.perform
       expect(use_case).to be_success
-    end
-
-    context 'events' do
-      before { Wisper::GlobalListeners.clear }
-
-      it 'published a global success event with given args' do
-        subscriber = double(sign_up_success: false)
-        use_case_class.subscribe(subscriber)
-        use_case = use_case_class.perform(:my_arg)
-        expect(subscriber).to have_received(:sign_up_success).with(:my_arg)
-      end
-
-      it 'publishes a local success event with given args' do
-        use_case = use_case_class.new(:my_arg)
-        @called = false
-        use_case.on_success do |args|
-          @called = true
-          @args = args
-        end
-        use_case.perform
-        expect(@called).to eq true
-        expect(@args).to eq :my_arg
-      end
     end
   end
 

@@ -1,5 +1,4 @@
 require "active_model"
-require "wisper"
 
 require "use_case/version"
 require "use_case/module_builder"
@@ -9,7 +8,7 @@ require "use_case/params"
 module UseCase
   # Override Ruby's module inclusion hook to prepend base with our #perform
   # method, extend base with a .perform method, include Params for Virtus and
-  # ActiveSupport::Validation, and include Wisper for pub/sub.
+  # ActiveSupport::Validation.
   #
   # @api private
   def self.included(base)
@@ -19,7 +18,6 @@ module UseCase
       include InstanceMethods
       include Params
       include ActiveModel::Validations
-      include Wisper::Publisher
     end
   end
 
@@ -43,7 +41,6 @@ module UseCase
       if validations
         include ActiveModel::Validations
       end
-      include Wisper::Publisher
     end
   end
 
@@ -126,44 +123,9 @@ module UseCase
       !!@failed
     end
 
-    # Attach a success callback using wisper
-    #
-    # @see Wisper
-    #
-    # @example
-    #   use_case = SignUp.new(params)
-    #   use_case.on_success do
-    #     # handle success
-    #   end
-    #   use_case.perform
-    #
-    # @since 0.0.1
-    # @api public
-    def on_success(&block)
-      on(namespaced_name(:success), &block)
-    end
-
-    # Attach a failure callback
-    #
-    # @see Wisper
-    #
-    # @example
-    #   use_case = SignUp.new(params)
-    #   use_case.on_failure do
-    #     # handle failure
-    #   end
-    #   use_case.perform
-    #
-    # @since 0.0.1
-    # @api public
-    def on_failure(&block)
-      on(namespaced_name(:failure), &block)
-    end
-
     private
 
-    # Mark the use case as successful and publish the event with
-    # Wisper.
+    # Mark the use case as successful.
     #
     # @return [TrueClass]
     #
@@ -171,12 +133,10 @@ module UseCase
     # @api public
     def success(args = nil)
       @failed = false
-      publish(namespaced_name(:success), args)
       true
     end
 
-    # Mark the use case as failed, publishes the event with
-    # Wisper and exits the use case.
+    # Mark the use case as failed and exits the use case.
     #
     # @return [FalseClass]
     #
@@ -184,24 +144,7 @@ module UseCase
     # @api public
     def failure(args = nil)
       @failed = true
-      publish(namespaced_name(:failure), args)
       throw :halt
-    end
-
-    # Return an event name namespaced by the underscored class name
-    #
-    # @return [String]
-    #
-    # @example
-    #   namespaced_event(:success)
-    #   # => "sign_up_success"
-    #   namespaced_event(:failure)
-    #   # => "sign_up_failure"
-    #
-    # @since 0.0.1
-    # @api private
-    def namespaced_name(event)
-      [self.class.model_name.param_key, event].join('_')
     end
 
     # Halts execution of the use case if validation fails and
