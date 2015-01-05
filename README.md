@@ -4,12 +4,10 @@ Provides a convention for modelling user interactions as use case classes. A
 use case represents something a user does with your application, and is named
 as a verb. SignUp, RequestResetPasswordEmail etc.
 
-This library is mostly glue around [Virtus](https://github.com/solnic/virtus),
-[ActiveModel::Validations](http://api.rubyonrails.org/classes/ActiveModel/Validations.html)
-and [Wisper](https://github.com/krisleech/wisper) to provide a convention for
+This library is mostly glue around [Virtus](https://github.com/solnic/virtus) and 
+[ActiveModel::Validations](http://api.rubyonrails.org/classes/ActiveModel/Validations.html) to provide a convention for
 writing use cases.  Virtus is used for parameter declaration and strict type
-coersion.  ActiveModel::Validations is used for validations and Wisper for
-publish and subscribe events.
+coersion. ActiveModel::Validations is used for validation.
 
 ## Type coercion
 
@@ -117,29 +115,6 @@ class UsersController < ApplicationController
     @form = SignUpForm.new(params)
   end
 end
-```
-
-## Global subscribers
-
-```ruby
-class LogSubscriber
-  def sign_up_success(user)
-    Rails.logger.info("Signed up user")
-  end
-end
-SignUp.subscribe(LogSubscriber.new)
-```
-
-## Block subscribers
-
-```ruby
-use_case = SignUp.new(form)
-use_case.on_success do |user|
-  # ...
-end
-use_case.on_failure do
-end
-use_case.perform
 ```
 
 ## Contributing
