@@ -44,7 +44,7 @@ class SignUpForm
 end
 ```
 
-The use case interacts with the rest of your application to complete the use case. Implement #perform and call `success` or `failure` with any arguments. Those arguments are sent to subscribers of the events.
+The use case interacts with the rest of your application to complete the use case. Implement #perform and call `success` or `failure` with any arguments.
 
 ```ruby
 class SignUp
