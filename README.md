@@ -60,10 +60,11 @@ class SignUp
   validate :username_is_unique
 
   def perform
-    validate!
-    create_user
+    retry_once ActiveRecord::RecordNotUnique do
+      validate!
+      create_user
+    end
     deliver_welcome_email
-    success(@user)
   end
 
   # Expose objects to the controller/other callers
@@ -89,6 +90,10 @@ class SignUp
 
   def deliver_welcome_email
     UserMailer.deliver_signup_confirmation(@user)
+  end
+
+  def retry_once
+    # ...
   end
 end
 ```
