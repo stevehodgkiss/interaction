@@ -25,7 +25,7 @@ module UseCase
   module Params
     def self.included(base)
       base.class_eval do
-        include Virtus.model(strict: true)
+        include Virtus.model(strict: true, required: false)
         extend ClassMethods
 
         include ActiveModel::Conversion
@@ -33,20 +33,6 @@ module UseCase
     end
 
     module ClassMethods
-      # Specify an attribute and it's type
-      #
-      # @param name [String] the name of the attribute
-      # @param type [Class] the type of the attribute
-      # @param options [Hash] options to be passed to Virtus
-      #
-      # @see Virtus::Extensions::Methods.attribute
-      #
-      # @since 0.0.1
-      # @api public
-      def attribute(name, type, options = {})
-        super(name, type, { required: false }.merge(options))
-      end
-
       # Set the active model name to be used for partial paths
       # and form keys in Rails.
       #
