@@ -78,6 +78,26 @@ describe UseCase do
       use_case = use_case_class.perform
       expect(use_case).to_not be_success
     end
+
+    context 'on exception' do
+      let(:my_error) { Class.new(StandardError) }
+      let(:use_case_class) {
+        Class.new do
+          include UseCase.use_case
+          set_model_name 'sign_up'
+
+          def perform
+            raise RuntimeError
+          end
+        end
+      }
+
+      it "doesn't mark the use case as success" do
+        use_case = use_case_class.new
+        use_case.perform rescue RuntimeError
+        expect(use_case).to_not be_success
+      end
+    end
   end
 
   describe '#success' do

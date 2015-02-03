@@ -110,7 +110,7 @@ module UseCase
     # @since 0.0.1
     # @api public
     def success?
-      !failed?
+      !!@success
     end
 
     # Indicates whether the use case failed
@@ -120,7 +120,7 @@ module UseCase
     # @since 0.0.1
     # @api public
     def failed?
-      !!@failed
+      !success?
     end
 
     private
@@ -132,18 +132,15 @@ module UseCase
     # @since 0.0.1
     # @api public
     def success(args = nil)
-      @failed = false
-      true
+      @success = true
     end
 
     # Mark the use case as failed and exits the use case.
     #
-    # @return [FalseClass]
-    #
     # @since 0.0.1
     # @api public
     def failure(args = nil)
-      @failed = true
+      @success = false
       throw :halt
     end
 
@@ -154,7 +151,7 @@ module UseCase
     # @api private
     # @since 0.0.1
     def result_specified?
-      defined?(@failed)
+      defined?(@success)
     end
   end
 end
