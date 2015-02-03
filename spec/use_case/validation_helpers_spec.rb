@@ -4,7 +4,7 @@ describe UseCase::ValidationHelpers do
   subject(:use_case) {
     Class.new {
       include UseCase
-      param_key 'test'
+      set_model_name 'test'
 
       attr_accessor :name
       validates :name, presence: true

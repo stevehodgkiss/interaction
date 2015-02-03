@@ -5,7 +5,7 @@ describe UseCase do
     let(:use_case_class) do
       Class.new do
         include UseCase.use_case
-        param_key 'sign_up'
+        set_model_name 'sign_up'
 
         def initialize(*args)
           @args = args
@@ -52,7 +52,7 @@ describe UseCase do
     let(:use_case_class) {
       Class.new do
         include UseCase.use_case
-        param_key 'sign_up'
+        set_model_name 'sign_up'
 
         def initialize(*args)
           @args = args
@@ -84,7 +84,7 @@ describe UseCase do
     let(:use_case_class) {
       Class.new do
         include UseCase.use_case
-        param_key 'sign_up'
+        set_model_name 'sign_up'
 
         def initialize(*args)
           @args = args

@@ -21,7 +21,7 @@ describe UseCase::Params do
     params = Class.new do
       include UseCase.params
       attribute :name, String
-      param_key(:user)
+      set_model_name(:user)
     end
     expect(params.model_name).to eq 'user'
   end

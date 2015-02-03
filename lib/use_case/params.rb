@@ -11,7 +11,7 @@ module UseCase
   #   class SignUpForm
   #     include UseCase::Params
   #
-  #     param_key 'sign_up'
+  #     set_model_name 'sign_up'
   #
   #     attribute :name, String
   #
@@ -38,7 +38,7 @@ module UseCase
       #
       # @since 0.0.1
       # @api public
-      def param_key(name)
+      def set_model_name(name)
         class_eval <<-RUBY
           def self.model_name
             @model_name ||= ActiveModel::Name.new(self, nil, "#{name}")
