@@ -44,11 +44,11 @@ class SignUpForm
 end
 ```
 
-The use case interacts with the rest of your application to complete the use
-case. Implement #perform and call `failure` fail the use case and exit it
-immediately. This is similar to sinatra's `halt` in that it uses `throw` and
-`catch` to immediately exit the use case. The validation helper `validate!` is
-implemented as `failure unless valid?`.
+The use case class interacts with the rest of your application to perform the
+desired behaviour. Implement `#perform` and call `failure` fail the use case and
+exit it immediately. This is similar to sinatra's `halt` in that it uses
+`throw` and `catch` to terminate the method. The validation helper `validate!`
+is implemented as `failure unless valid?`.
 
 ```ruby
 class SignUp
