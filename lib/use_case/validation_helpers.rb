@@ -7,7 +7,7 @@ module UseCase::ValidationHelpers
   # @since 0.0.1
   # @api public
   def validate!
-    failure(errors) unless valid?
+    failure unless valid?
   end
 
   # Merges errors from another
