@@ -80,7 +80,7 @@ module UseCase
   #
   # @since 0.0.1
   # @api public
-  def success(args = nil)
+  def success
     @success = true
   end
 
@@ -88,7 +88,7 @@ module UseCase
   #
   # @since 0.0.1
   # @api public
-  def failure(args = nil)
+  def failure
     @success = false
     throw :halt
   end
