@@ -1,9 +1,6 @@
-require "active_model"
-
 require "use_case/version"
-require "use_case/module_builder"
-require "use_case/validation_helpers"
 require "use_case/params"
+require "use_case/validation_helpers"
 
 module UseCase
   # Override Ruby's module inclusion hook to prepend base with our #perform
@@ -15,52 +12,7 @@ module UseCase
     base.class_eval do
       prepend Perform
       extend ClassMethods
-      include InstanceMethods
       include Params
-      include ActiveModel::Validations
-    end
-  end
-
-  # Includes a customised use case module.
-  #
-  # @param options [Hash]
-  # @option options [TrueClass,FalseClass] :validations
-  #
-  # @example
-  #   include UseCase.use_case(validations: false)
-  #
-  # @return [Module]
-  # @since 0.0.1
-  def self.use_case(options = {})
-    validations = options.fetch(:validations, true)
-    ModuleBuilder.build do
-      prepend Perform
-      extend ClassMethods
-      include InstanceMethods
-      include Params
-      if validations
-        include ActiveModel::Validations
-      end
-    end
-  end
-
-  # Includes a customised params module.
-  #
-  # @param options [Hash]
-  # @option options [TrueClass,FalseClass] :validations
-  #
-  # @example
-  #   include UseCase.params(validations: false)
-  #
-  # @return [Module]
-  # @since 0.0.1
-  def self.params(options = {})
-    validations = options.fetch(:validations, true)
-    ModuleBuilder.build do
-      include Params
-      if validations
-        include ActiveModel::Validations
-      end
     end
   end
 
@@ -102,56 +54,54 @@ module UseCase
     end
   end
 
-  module InstanceMethods
-    # Indicates if the use case was successful
-    #
-    # @return [TrueClass, FalseClass]
-    #
-    # @since 0.0.1
-    # @api public
-    def success?
-      !!@success
-    end
+  # Indicates if the use case was successful
+  #
+  # @return [TrueClass, FalseClass]
+  #
+  # @since 0.0.1
+  # @api public
+  def success?
+    !!@success
+  end
 
-    # Indicates whether the use case failed
-    #
-    # @return [TrueClass, FalseClass]
-    #
-    # @since 0.0.1
-    # @api public
-    def failed?
-      !success?
-    end
+  # Indicates whether the use case failed
+  #
+  # @return [TrueClass, FalseClass]
+  #
+  # @since 0.0.1
+  # @api public
+  def failed?
+    !success?
+  end
 
-    private
+  private
 
-    # Mark the use case as successful.
-    #
-    # @return [TrueClass]
-    #
-    # @since 0.0.1
-    # @api public
-    def success(args = nil)
-      @success = true
-    end
+  # Mark the use case as successful.
+  #
+  # @return [TrueClass]
+  #
+  # @since 0.0.1
+  # @api public
+  def success(args = nil)
+    @success = true
+  end
 
-    # Mark the use case as failed and exits the use case.
-    #
-    # @since 0.0.1
-    # @api public
-    def failure(args = nil)
-      @success = false
-      throw :halt
-    end
+  # Mark the use case as failed and exits the use case.
+  #
+  # @since 0.0.1
+  # @api public
+  def failure(args = nil)
+    @success = false
+    throw :halt
+  end
 
-    # Indicates whether the use case called success or failure
-    #
-    # @return [TrueClass, FalseClass]
-    #
-    # @api private
-    # @since 0.0.1
-    def result_specified?
-      defined?(@success)
-    end
+  # Indicates whether the use case called success or failure
+  #
+  # @return [TrueClass, FalseClass]
+  #
+  # @api private
+  # @since 0.0.1
+  def result_specified?
+    defined?(@success)
   end
 end

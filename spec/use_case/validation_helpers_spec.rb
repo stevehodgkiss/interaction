@@ -1,10 +1,15 @@
 require 'spec_helper'
+require 'active_model'
 
 describe UseCase::ValidationHelpers do
   subject(:use_case) {
     Class.new {
       include UseCase
-      set_model_name 'test'
+      include ActiveModel::Validations
+
+      def self.model_name
+        ActiveModel::Name.new(self, nil, "Test")
+      end
 
       attr_accessor :name
       validates :name, presence: true

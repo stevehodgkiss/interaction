@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = UseCase::VERSION
   spec.authors       = ["Steve Hodgkiss"]
   spec.email         = ["steve@hodgkiss.me"]
-  spec.summary       = %q{Provides a convention for modelling user interactions as use case classes. Uses Virtus and ActiveModel Validations.}
+  spec.summary       = %q{Provides a convention for modelling user interactions as use case classes.}
   spec.description   = %q{}
   spec.homepage      = ""
   spec.license       = "MIT"
@@ -21,7 +21,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
-  spec.add_development_dependency "pry"
+  spec.add_development_dependency "activemodel"
   spec.add_dependency "virtus", ">= 1.0.4"
-  spec.add_dependency "activemodel"
 end

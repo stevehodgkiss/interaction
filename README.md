@@ -4,17 +4,11 @@ Provides a convention for modelling user interactions as use case classes. A
 use case represents something a user does with your application, and is named
 as a verb. SignUp, RequestResetPasswordEmail etc.
 
-This library is mostly glue around [Virtus](https://github.com/solnic/virtus) and 
-[ActiveModel::Validations](http://api.rubyonrails.org/classes/ActiveModel/Validations.html) to provide a convention for
-writing use cases.  Virtus is used for parameter declaration and strict type
-coersion. ActiveModel::Validations is used for validation.
-
 ## Type coercion
 
 Whitelisting and sanitizing untrusted input into an expected type before it
-enters your application is good practice. Input is coerced into the type
-specified using Virtus. You can expect an attribute to be either the defined
-type or nil.
+enters your application is a good practice. Attributes are defined and coerced
+with Virtus. An attribute will either be the defined type or nil.
 
 ## Sign up example
 
@@ -23,8 +17,11 @@ form. Attributes can also be defined on use case classes.
 
 ```ruby
 class SignUpForm
-  include UseCase.params
-  set_model_name 'sign_up'
+  include UseCase::Params
+  # this just includes Virtus configured to strictly coerce input while
+  # allowing nil values:
+  # include Virtus.model(strict: true, required: false)
+  include ActiveModel::Validations
 
   attribute :username, String
   attribute :password, String
@@ -52,7 +49,8 @@ is implemented as `failure unless valid?`.
 
 ```ruby
 class SignUp
-  include UseCase.use_case
+  include UseCase
+  include ActiveModel::Validations
 
   def initialize(form)
     @form = form

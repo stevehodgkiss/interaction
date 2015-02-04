@@ -1,8 +1,8 @@
 module UseCase::ValidationHelpers
   private
 
-  # Halts execution of the use case if validation fails and
-  # published errors with Wisper.
+  # Halts execution of the use case if validation fails. Assumes
+  # #valid? is implemented by the chosen validation library.
   #
   # @since 0.0.1
   # @api public
@@ -11,7 +11,8 @@ module UseCase::ValidationHelpers
   end
 
   # Merges errors from another
-  # ActiveModel::Validations object with itself
+  # ActiveModel::Validations object with itself, assuming
+  # ActiveModel::Validations has been included.
   #
   # @param object [ActiveModel::Validations]
   #

@@ -1,17 +1,13 @@
 require 'virtus'
 
 module UseCase
-  # Whitelisting, coerce and validate user input.
-  #
-  # Uses Virtus and ActiveModel::Validations.
+  # Uses Virtus for whitelisting, coerce and validate user input.
   #
   # Virtus is configured in strict mode to ensure input is coerced to either the specified type or nil.
   #
   # @example
   #   class SignUpForm
   #     include UseCase::Params
-  #
-  #     set_model_name 'sign_up'
   #
   #     attribute :name, String
   #
@@ -26,24 +22,6 @@ module UseCase
     def self.included(base)
       base.class_eval do
         include Virtus.model(strict: true, required: false)
-        extend ClassMethods
-
-        include ActiveModel::Conversion
-      end
-    end
-
-    module ClassMethods
-      # Set the active model name to be used for partial paths
-      # and form keys in Rails.
-      #
-      # @since 0.0.1
-      # @api public
-      def set_model_name(name)
-        class_eval <<-RUBY
-          def self.model_name
-            @model_name ||= ActiveModel::Name.new(self, nil, "#{name}")
-          end
-        RUBY
       end
     end
   end

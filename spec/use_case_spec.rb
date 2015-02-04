@@ -4,8 +4,7 @@ describe UseCase do
   describe '.perform' do
     let(:use_case_class) do
       Class.new do
-        include UseCase.use_case
-        set_model_name 'sign_up'
+        include UseCase
 
         def initialize(*args)
           @args = args
@@ -51,8 +50,7 @@ describe UseCase do
   describe '#failure' do
     let(:use_case_class) {
       Class.new do
-        include UseCase.use_case
-        set_model_name 'sign_up'
+        include UseCase
 
         def initialize(*args)
           @args = args
@@ -83,8 +81,7 @@ describe UseCase do
       let(:my_error) { Class.new(StandardError) }
       let(:use_case_class) {
         Class.new do
-          include UseCase.use_case
-          set_model_name 'sign_up'
+          include UseCase
 
           def perform
             raise RuntimeError
@@ -103,8 +100,7 @@ describe UseCase do
   describe '#success' do
     let(:use_case_class) {
       Class.new do
-        include UseCase.use_case
-        set_model_name 'sign_up'
+        include UseCase
 
         def initialize(*args)
           @args = args
@@ -126,32 +122,6 @@ describe UseCase do
     it 'marks the use case as success' do
       use_case = use_case_class.perform
       expect(use_case).to be_success
-    end
-  end
-
-  describe 'configuration options' do
-    context 'without validations' do
-      let(:use_case_class) {
-        Class.new do
-          include UseCase.use_case(validations: false)
-        end
-      }
-
-      it "doesn't include ActiveModel::Validations" do
-        expect(use_case_class.ancestors).to_not include(ActiveModel::Validations)
-      end
-    end
-
-    context 'with validations' do
-      let(:use_case_class) {
-        Class.new do
-          include UseCase.use_case(validations: true)
-        end
-      }
-
-      it 'includes ActiveModel::Validations' do
-        expect(use_case_class.ancestors).to include(ActiveModel::Validations)
-      end
     end
   end
 end
