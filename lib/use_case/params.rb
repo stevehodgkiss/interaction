@@ -1,23 +1,25 @@
 require 'virtus'
 
 module UseCase
-  # Uses Virtus for whitelisting, coerce and validate user input.
+  # Uses Virtus for whitelisting and type coercion.
   #
-  # Virtus is configured in strict mode to ensure input is coerced to either the specified type or nil.
+  # Virtus is configured in strict mode to ensure input is coerced to either
+  # the specified type or nil.
   #
   # @example
   #   class SignUpForm
   #     include UseCase::Params
   #
   #     attribute :name, String
-  #
-  #     validates :name, presence: true
   #   end
   #
-  #   form = SignUpForm.new(name: 'John Smith')
-  #   form.valid? # => true
+  #   SignUpForm.new(name: 'John Smith').name
+  #   # => "John Smith"
   #
-  #   form = SignUpForm.new(name: ['a']) # => Virtus::CoercionError
+  #   SignUpForm.new(name: ['a']) # => Virtus::CoercionError
+  #
+  #   SignUpForm.new.name
+  #   # => nil
   module Params
     def self.included(base)
       base.class_eval do
