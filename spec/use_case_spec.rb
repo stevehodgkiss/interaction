@@ -121,9 +121,10 @@ describe UseCase do
       end
     }
 
-    it "doesn't mark the use case as success" do
+    it "marks the use case as failed" do
       use_case = use_case_class.new
       use_case.perform rescue RuntimeError
+      expect(use_case).to be_failed
       expect(use_case).to_not be_success
     end
   end
