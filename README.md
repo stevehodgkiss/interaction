@@ -1,8 +1,8 @@
 # UseCase
 
 Provides a convention for modelling user interactions as use case classes. A
-use case represents something a user does with your application, and is named
-as a verb. SignUp, RequestResetPasswordEmail etc.
+use case class represents something a user does with your application, and is named
+after it - `SignUp`, `RequestResetPasswordEmail` etc.
 
 ## Type coercion
 
@@ -10,10 +10,12 @@ Whitelisting and sanitizing untrusted input into an expected type before it
 enters your application is a good practice. Attributes are defined and coerced
 with Virtus. An attribute will either be the defined type or nil.
 
+Take a look at the [code itself](https://github.com/stevehodgkiss/use_case/blob/master/lib/use_case.rb) for details of the API provided.
+
 ## Sign up example
 
 Use Form objects when the input is complex or you want to bind it to a Rails
-form. Attributes can also be defined on use case classes.
+form. Attributes can also be defined on use case classes for simpler scenarios.
 
 ```ruby
 class SignUpForm
