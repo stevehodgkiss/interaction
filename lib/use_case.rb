@@ -84,12 +84,20 @@ module UseCase
     @success = true
   end
 
-  # Mark the use case as failed and exits the use case.
+  # Mark the use case as failed.
   #
   # @since 0.0.1
   # @api public
   def failure
     @success = false
+  end
+
+  # Mark the use case as failed and exits the use case.
+  #
+  # @since 0.0.1
+  # @api public
+  def failure!
+    failure
     throw :halt
   end
 

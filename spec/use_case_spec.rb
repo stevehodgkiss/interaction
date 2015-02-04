@@ -57,7 +57,7 @@ describe UseCase do
         end
 
         def perform
-          failure(*@args)
+          failure
           @performed = true
         end
 
@@ -66,34 +66,65 @@ describe UseCase do
         end
       end
     }
+    subject(:use_case) { use_case_class.perform }
+
+    it 'does not halt execution of the use case' do
+      expect(use_case).to be_performed
+    end
+
+    it 'marks the use case as failed' do
+      expect(use_case).to be_failed
+      expect(use_case).to_not be_success
+    end
+  end
+
+  describe '#failure!' do
+    let(:use_case_class) {
+      Class.new do
+        include UseCase
+
+        def initialize(*args)
+          @args = args
+        end
+
+        def perform
+          failure!
+          @performed = true
+        end
+
+        def performed?
+          @performed
+        end
+      end
+    }
+    subject(:use_case) { use_case_class.perform }
 
     it 'halts execution of the use case' do
-      use_case = use_case_class.perform
       expect(use_case).to_not be_performed
     end
 
     it 'marks the use case as failed' do
-      use_case = use_case_class.perform
+      expect(use_case).to be_failed
       expect(use_case).to_not be_success
     end
+  end
 
-    context 'on exception' do
-      let(:my_error) { Class.new(StandardError) }
-      let(:use_case_class) {
-        Class.new do
-          include UseCase
+  context 'on exception' do
+    let(:my_error) { Class.new(StandardError) }
+    let(:use_case_class) {
+      Class.new do
+        include UseCase
 
-          def perform
-            raise RuntimeError
-          end
+        def perform
+          raise RuntimeError
         end
-      }
-
-      it "doesn't mark the use case as success" do
-        use_case = use_case_class.new
-        use_case.perform rescue RuntimeError
-        expect(use_case).to_not be_success
       end
+    }
+
+    it "doesn't mark the use case as success" do
+      use_case = use_case_class.new
+      use_case.perform rescue RuntimeError
+      expect(use_case).to_not be_success
     end
   end
 
