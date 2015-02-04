@@ -22,7 +22,7 @@ class SignUp
   attribute :password, String
 
   # ActiveModel validations
-  validate :email, :password, presence: true
+  validates :email, :password, presence: true
 
   attr_reader :user
 
