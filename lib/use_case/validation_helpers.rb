@@ -1,8 +1,9 @@
+# Validation helpers intended to be used with
+# ActiveModel::Validations
 module UseCase::ValidationHelpers
   private
 
-  # Halts execution of the use case if validation fails. Assumes
-  # #valid? is implemented by the chosen validation library.
+  # Halts execution of the use case if validation fails.
   #
   # @since 0.0.1
   # @api public
@@ -11,8 +12,7 @@ module UseCase::ValidationHelpers
   end
 
   # Merges errors from another
-  # ActiveModel::Validations object with itself, assuming
-  # ActiveModel::Validations has been included.
+  # ActiveModel::Validations object with itself.
   #
   # @param object [ActiveModel::Validations]
   #

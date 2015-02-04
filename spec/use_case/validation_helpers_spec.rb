@@ -5,6 +5,7 @@ describe UseCase::ValidationHelpers do
   subject(:use_case) {
     Class.new {
       include UseCase
+      include UseCase::ValidationHelpers
       include ActiveModel::Validations
 
       def self.model_name

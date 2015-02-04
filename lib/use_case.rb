@@ -16,8 +16,6 @@ module UseCase
     end
   end
 
-  include ValidationHelpers
-
   module Perform
     # Executes use case logic
     #

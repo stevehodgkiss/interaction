@@ -50,6 +50,7 @@ is implemented as `failure unless valid?`.
 ```ruby
 class SignUp
   include UseCase
+  include UseCase::ValidationHelpers
   include ActiveModel::Validations
 
   def initialize(form)
