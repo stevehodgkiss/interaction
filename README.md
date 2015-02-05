@@ -35,7 +35,12 @@ class SignUp
   private
 
   def create_user
-    @user = User.create!(attributes)
+    @user = User.create(attributes)
+    failure! unless @user.persisted?
+  end
+
+  def deliver_welcome_email
+    # ...
   end
 end
 
