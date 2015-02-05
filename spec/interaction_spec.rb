@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe UseCase do
+describe Interaction do
   describe '.perform' do
     let(:use_case_class) do
       Class.new do
-        include UseCase
+        include Interaction
 
         def initialize(*args)
           @args = args
@@ -50,7 +50,7 @@ describe UseCase do
   describe '#failure' do
     let(:use_case_class) {
       Class.new do
-        include UseCase
+        include Interaction
 
         def initialize(*args)
           @args = args
@@ -81,7 +81,7 @@ describe UseCase do
   describe '#failure!' do
     let(:use_case_class) {
       Class.new do
-        include UseCase
+        include Interaction
 
         def initialize(*args)
           @args = args
@@ -113,7 +113,7 @@ describe UseCase do
     let(:my_error) { Class.new(StandardError) }
     let(:use_case_class) {
       Class.new do
-        include UseCase
+        include Interaction
 
         def perform
           raise RuntimeError
@@ -132,7 +132,7 @@ describe UseCase do
   describe '#success' do
     let(:use_case_class) {
       Class.new do
-        include UseCase
+        include Interaction
 
         def initialize(*args)
           @args = args

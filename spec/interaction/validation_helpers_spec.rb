@@ -1,11 +1,11 @@
 require 'spec_helper'
 require 'active_model'
 
-describe UseCase::ValidationHelpers do
+describe Interaction::ValidationHelpers do
   subject(:use_case) {
     Class.new {
-      include UseCase
-      include UseCase::ValidationHelpers
+      include Interaction
+      include Interaction::ValidationHelpers
       include ActiveModel::Validations
 
       def self.model_name

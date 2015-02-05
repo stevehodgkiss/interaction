@@ -1,6 +1,6 @@
 require 'virtus'
 
-module UseCase
+module Interaction
   # Uses Virtus for whitelisting and type coercion.
   #
   # Virtus is configured in strict mode to ensure input is coerced to either
@@ -8,7 +8,7 @@ module UseCase
   #
   # @example
   #   class SignUpForm
-  #     include UseCase::Params
+  #     include Interaction::Params
   #
   #     attribute :name, String
   #   end

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe UseCase::Params do
+describe Interaction::Params do
   it 'defaults attributes to not required so that nil or the given type is an acceptable value' do
     params = Class.new do
-      include UseCase::Params
+      include Interaction::Params
       attribute :name, String
     end.new
     expect(params.name).to be_nil
@@ -12,7 +12,7 @@ describe UseCase::Params do
   context 'type coercion' do
     let(:klass) {
       Class.new do
-        include UseCase::Params
+        include Interaction::Params
 
         attribute :name, String
       end

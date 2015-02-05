@@ -1,6 +1,6 @@
 # Validation helpers intended to be used with
 # ActiveModel::Validations
-module UseCase::ValidationHelpers
+module Interaction::ValidationHelpers
   private
 
   # Halts execution of the use case if validation fails.

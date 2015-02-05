@@ -1,8 +1,8 @@
-require "use_case/version"
-require "use_case/params"
-require "use_case/validation_helpers"
+require "interaction/version"
+require "interaction/params"
+require "interaction/validation_helpers"
 
-module UseCase
+module Interaction
   # Override Ruby's module inclusion hook to prepend base with our #perform
   # method, extend base with a .perform method, include Params for Virtus and
   # ActiveSupport::Validation.

@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'use_case/version'
+require 'interaction/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "use_case"
-  spec.version       = UseCase::VERSION
+  spec.name          = "interaction"
+  spec.version       = Interaction::VERSION
   spec.authors       = ["Steve Hodgkiss"]
   spec.email         = ["steve@hodgkiss.me"]
   spec.summary       = %q{Provides a convention for modelling user interactions as use case classes.}

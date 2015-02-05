@@ -1,4 +1,4 @@
-# UseCase
+# Interaction
 
 Provides a convention for modelling user interactions as use case classes. A
 use case class represents and is named after something a user does with your
@@ -13,8 +13,8 @@ Take a look at the [code itself](https://github.com/stevehodgkiss/use_case/blob/
 
 ```ruby
 class SignUp
-  include UseCase
-  include UseCase::ValidationHelpers
+  include Interaction
+  include Interaction::ValidationHelpers
   include ActiveModel::Validations
 
   # Virtus
