@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["steve@hodgkiss.me"]
   spec.summary       = %q{Provides a convention for modelling user interactions as use case classes.}
   spec.description   = %q{}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/stevehodgkiss/interaction"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
