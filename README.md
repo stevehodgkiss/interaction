@@ -7,7 +7,7 @@ application `SignUp`, `RequestResetPasswordEmail` etc.
 Attributes are whitelisted and coerced into an expected type using Virtus. An
 attribute will either be the specified type or nil.
 
-Take a look at the [code itself](https://github.com/stevehodgkiss/use_case/blob/master/lib/use_case.rb) for full details of the API provided.
+Take a look at the [code itself](https://github.com/stevehodgkiss/interaction/blob/master/lib/interaction.rb) for full details of the API provided.
 
 ## A simple example
 
