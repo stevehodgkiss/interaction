@@ -3,9 +3,8 @@ require "interaction/params"
 require "interaction/validation_helpers"
 
 module Interaction
-  # Override Ruby's module inclusion hook to prepend base with our #perform
-  # method, extend base with a .perform method, include Params for Virtus and
-  # ActiveSupport::Validation.
+  # Override Ruby's module inclusion hook to prepend base with #perform,
+  # extend base with a .perform method, and include Params for Virtus.
   #
   # @api private
   def self.included(base)
