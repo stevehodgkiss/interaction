@@ -12,11 +12,12 @@ describe Interaction::ValidationHelpers do
         ActiveModel::Name.new(self, nil, "Test")
       end
 
-      attr_accessor :name
+      attr_accessor :name, :result
       validates :name, presence: true
 
       def perform
         validate!
+        @result = true
       end
 
       public :merge_errors
@@ -45,12 +46,15 @@ describe Interaction::ValidationHelpers do
       let(:params) { {} }
 
       it { should_not be_success }
+      it { expect(use_case.result).to be_nil }
     end
 
     context 'when validation succeeds' do
       let(:params) { { name: 'Test' } }
 
       it { should be_success }
+
+      it { expect(use_case.result).to eq(true) }
     end
   end
 end
