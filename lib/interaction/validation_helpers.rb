@@ -8,7 +8,7 @@ module Interaction::ValidationHelpers
   # @since 0.0.1
   # @api public
   def validate!
-    failure unless valid?
+    failure! unless valid?
   end
 
   # Merges errors from another
