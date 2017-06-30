@@ -5,8 +5,8 @@ describe Interaction::ValidationHelpers do
   subject(:use_case) {
     Class.new {
       include Interaction
-      include Interaction::ValidationHelpers
       include ActiveModel::Validations
+      include Interaction::ValidationHelpers
 
       def self.model_name
         ActiveModel::Name.new(self, nil, "Test")

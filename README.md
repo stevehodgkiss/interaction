@@ -14,8 +14,8 @@ Take a look at the [code itself](https://github.com/stevehodgkiss/interaction/bl
 ```ruby
 class SignUp
   include Interaction
-  include Interaction::ValidationHelpers
   include ActiveModel::Validations
+  include Interaction::ValidationHelpers
 
   # Virtus
   attribute :email, String
